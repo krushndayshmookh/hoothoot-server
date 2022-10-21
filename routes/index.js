@@ -8,8 +8,8 @@ router.get('/api', (req, res) => {
   res.send('Please read documentation for the API.')
 })
 
-router.get('/', (req, res) => {
-  res.redirect('/api')
-})
+// router.get('/', (req, res) => {
+//   res.redirect('/api')
+// })
 
 module.exports = router

@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid')
+
 const User = require('../models/user').model
 
 exports.list_get = (req, res) => {
@@ -10,7 +12,7 @@ exports.list_get = (req, res) => {
   }
 
   User.find(query)
-    .select('-password')
+    .select('-passphrase')
     .lean()
     .then(doc => {
       return res.send(doc)
@@ -22,14 +24,14 @@ exports.list_get = (req, res) => {
 }
 
 exports.details_get = (req, res) => {
-  const { userid } = req.params
+  const { userId } = req.params
 
   let query = {
-    _id: userid
+    _id: userId
   }
 
   User.findOne(query)
-    .select('-password')
+    .select('-passphrase')
     .lean()
     .then(doc => {
       return res.send(doc)
@@ -41,13 +43,13 @@ exports.details_get = (req, res) => {
 }
 
 exports.create_post = (req, res) => {
-  const { name, email, password, type } = req.body
+  const { username } = req.body
+
+  const passphrase = uuidv4()
 
   let newUser = new User({
-    name,
-    email,
-    password,
-    type
+    username,
+    passphrase,
   })
 
   newUser
@@ -62,10 +64,10 @@ exports.create_post = (req, res) => {
 }
 
 exports.delete_delete = async (req, res) => {
-  const { userid } = req.params
+  const { userId } = req.params
 
   let query = {
-    _id: userid
+    _id: userId
   }
 
   User.deleteOne(query)

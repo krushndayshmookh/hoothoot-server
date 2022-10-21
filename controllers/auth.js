@@ -2,10 +2,11 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/user').model
 
-exports.login_post = async (req, res) => {
-  const { email, password, type } = req.body
+exports.signIn_post = async (req, res) => {
+  const { passphrase } = req.body
 
-  User.findOne({ email, password, type })
+  User.findOne({ passphrase })
+    .select('-passphrase')
     .lean()
     .then(user => {
       if (user) {
@@ -35,6 +36,6 @@ exports.login_post = async (req, res) => {
     })
 }
 
-exports.login_status_get = (req, res) => {
+exports.signIn_status_get = (req, res) => {
   res.send({ success: true })
 }

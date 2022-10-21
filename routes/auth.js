@@ -6,11 +6,11 @@ const authController = require('../controllers/auth')
 
 // Controllers -----
 
-router.get('/login/status', validateToken, authController.login_status_get)
+router.get('/sign-in/status', validateToken, authController.signIn_status_get)
 
-router.post('/login', authController.login_post)
+router.post('/sign-in', authController.signIn_post)
 
-router.get('/', (req, res) => {
+router.get('*', (req, res) => {
   res.send('Please read documentation for the API. (auth)')
 })
 
